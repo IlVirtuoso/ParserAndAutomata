@@ -128,13 +128,40 @@ public class Lexer {
 
             default:
                 if (Character.isLetter(peek)) {
-
-    // ... gestire il caso degli identificatori e delle parole chiave //
-                    
-                    
+                    String parsed = "";
+                    while(peek>='a' && peek<='z'){
+                        parsed = parsed + peek;
+                        peek = ' ';
+                    }
+                    if(parsed == "while"){
+                        return Word.whiletok;
+                    }
+                    else if(parsed == "then"){
+                        return Word.then;
+                    }
+                    else if(parsed == "else"){
+                        return Word.elsetok;
+                    }
+                    else if(parsed == "do"){
+                        return Word.dotok;
+                    }
+                    else if(parsed == "print"){
+                        return Word.print;
+                    }
+                    else if(parsed == "read"){
+                        return Word.print;
+                    }
+                    else if(parsed == "when"){
+                        return Word.when;
+                    }
                 } else if (Character.isDigit(peek)) {
-
-	// ... gestire il caso dei numeri ... //
+                    String number = "";
+                    while(peek>='0' && peek<='9' || peek == '.' || peek == ','){
+                        number = number + peek;
+                        peek = ' ';
+                    }
+                    System.out.println("parsed  " + number);
+                    return T
 
                 } else {
                         System.err.println("Erroneous character: " 
