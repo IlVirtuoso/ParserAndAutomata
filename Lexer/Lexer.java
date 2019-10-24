@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+
+
 public class Lexer {
 
     public static int line = 1;
@@ -129,7 +131,7 @@ public class Lexer {
             default:
                 if (Character.isLetter(peek)) {
                     String parsed = "";
-                    while(peek>='a' && peek<='z'){
+                    while(peek>='a' && peek<='z' || peek >= '0' && peek<= '9'){
                         parsed = parsed + peek;
                         peek = ' ';
                     }
@@ -154,6 +156,13 @@ public class Lexer {
                     else if(parsed == "when"){
                         return Word.when;
                     }
+                    else if(parsed == "cond"){
+                        return Word.cond;
+                    }
+            
+                    else{
+                        return new Word(Tag.ID, parsed);
+                    }
                 } else if (Character.isDigit(peek)) {
                     String number = "";
                     while(peek>='0' && peek<='9' || peek == '.' || peek == ','){
@@ -161,7 +170,7 @@ public class Lexer {
                         peek = ' ';
                     }
                     System.out.println("parsed  " + number);
-                    return T
+                    return new Word(Tag.NUM,number);
 
                 } else {
                         System.err.println("Erroneous character: " 
@@ -173,7 +182,7 @@ public class Lexer {
 		
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        String path = "./try"; // il percorso del file da leggere
+        String path = "C:\\Users\\matte\\OneDrive\\Desktop\\programmazione\\ParserAndAutomata\\Lexer\\try"; // il percorso del file da leggere
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Token tok;

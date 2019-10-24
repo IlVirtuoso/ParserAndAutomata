@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Lexer",
+            "request": "launch",
+            "mainClass": "Lexer",
+            "projectName": "ParserAndAutomata_9e638df9"
+        }
+    ]
+}
