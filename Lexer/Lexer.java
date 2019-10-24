@@ -134,8 +134,10 @@ public class Lexer {
                     while(peek>='a' && peek<='z' || peek >= '0' && peek<= '9'){
                         parsed = parsed + peek;
                         peek = ' ';
+                        readch(br);
                     }
-                    if(parsed == "while"){
+                    System.out.println("Parsed:"+ parsed);
+                    if(parsed.contains("while")){
                         return Word.whiletok;
                     }
                     else if(parsed == "then"){
@@ -159,17 +161,17 @@ public class Lexer {
                     else if(parsed == "cond"){
                         return Word.cond;
                     }
-            
                     else{
                         return new Word(Tag.ID, parsed);
                     }
+                    
                 } else if (Character.isDigit(peek)) {
                     String number = "";
                     while(peek>='0' && peek<='9' || peek == '.' || peek == ','){
                         number = number + peek;
                         peek = ' ';
+                        readch(br);
                     }
-                    System.out.println("parsed  " + number);
                     return new Word(Tag.NUM,number);
 
                 } else {
