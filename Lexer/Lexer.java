@@ -136,29 +136,28 @@ public class Lexer {
                         peek = ' ';
                         readch(br);
                     }
-                    System.out.println("Parsed:"+ parsed);
-                    if(parsed.contains("while")){
+                    if(parsed.equals("while")){
                         return Word.whiletok;
                     }
-                    else if(parsed == "then"){
+                    else if(parsed.equals ("then")){
                         return Word.then;
                     }
-                    else if(parsed == "else"){
+                    else if(parsed.equals ("else")){
                         return Word.elsetok;
                     }
-                    else if(parsed == "do"){
+                    else if(parsed.equals ("do")){
                         return Word.dotok;
                     }
-                    else if(parsed == "print"){
+                    else if(parsed.equals ("print")){
                         return Word.print;
                     }
-                    else if(parsed == "read"){
+                    else if(parsed.equals ("read")){
                         return Word.print;
                     }
-                    else if(parsed == "when"){
+                    else if(parsed.equals ("when")){
                         return Word.when;
                     }
-                    else if(parsed == "cond"){
+                    else if(parsed.equals ("cond")){
                         return Word.cond;
                     }
                     else{
@@ -184,7 +183,7 @@ public class Lexer {
 		
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        String path = "C:\\Users\\matte\\OneDrive\\Desktop\\programmazione\\ParserAndAutomata\\Lexer\\try"; // il percorso del file da leggere
+        String path = "Lexer\\try"; // il percorso del file da leggere
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Token tok;
