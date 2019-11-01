@@ -1,9 +1,6 @@
-float autovelox = 5555,5;
-int char = 221;
-int lol = 2,221;
-while(x == 4){
-    print(x);
-    return x;
-}
-do;
-cond;
+_vel = 0; () //serve per la velocità
+/*classe
+*fatta
+*a
+*caso
+*/

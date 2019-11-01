@@ -59,7 +59,49 @@ public class Lexer {
 
             case '/':
             peek = ' ';
-            return Token.div;
+            readch(br);
+            if(peek == '*'){
+                int state = 0;
+                peek = ' ';
+                while(state != 2){
+                    switch(state){
+                        case 0:
+                        readch(br);
+                        if(peek == '*') {
+                            state = 1; 
+                            peek = ' ';
+                        }
+                        else if(peek == -1){
+                            state = 2;
+                        }
+                        else{
+                            state = 0;
+                            peek = ' ';
+                        }
+                        break;
+    
+                        case 1:
+                        readch(br);
+                        if(peek == '/'){
+                            state = 2;
+                            peek = ' ';
+                        }
+                        else{
+                            state = 0;
+                            peek = ' ';
+                        }
+                    }
+                }
+            }
+            else if(peek == '/'){
+                while(peek != -1 && peek != '\n'){
+                    peek = ' ';
+                    readch(br);
+                }
+            }
+            else{
+                return Token.div;
+            }
 
             case ';':
             peek = ' ';
@@ -76,7 +118,7 @@ public class Lexer {
                     return null;
                 }
 
-    // ... gestire i casi di ||, <, >, <=, >=, ==, <> ... //
+   
             case '|':
             readch(br);
             if(peek == '|'){
@@ -129,9 +171,9 @@ public class Lexer {
                 return new Token(Tag.EOF);
 
             default:
-                if (Character.isLetter(peek)) {
+                if (Character.isLetter(peek) || peek == '_') {
                     String parsed = "";
-                    while(peek>='a' && peek<='z' || peek >= '0' && peek<= '9'){
+                    while(peek>='a' && peek<='z' || peek >= '0' && peek<= '9' || peek == '_'){
                         parsed = parsed + peek;
                         peek = ' ';
                         readch(br);
@@ -139,39 +181,60 @@ public class Lexer {
                     if(parsed.equals("while")){
                         return Word.whiletok;
                     }
-                    else if(parsed.equals ("then")){
+                    else if(parsed.equals("then")){
                         return Word.then;
                     }
-                    else if(parsed.equals ("else")){
+                    else if(parsed.equals("else")){
                         return Word.elsetok;
                     }
-                    else if(parsed.equals ("do")){
-                        return Word.dotok;
+                    else if(parsed.equals("do")){
+                    return Word.dotok;
                     }
-                    else if(parsed.equals ("print")){
+                    else if(parsed.equals("print")){
                         return Word.print;
                     }
-                    else if(parsed.equals ("read")){
+                    else if(parsed.equals("read")){
                         return Word.print;
                     }
-                    else if(parsed.equals ("when")){
+                    else if(parsed.equals("when")){
                         return Word.when;
                     }
-                    else if(parsed.equals ("cond")){
+                    else if(parsed.equals("cond")){
                         return Word.cond;
                     }
                     else{
-                        return new Word(Tag.ID, parsed);
+                        if(parsed.equals("_")){
+                            throw new IllegalArgumentException("Identificator can't contains only _");
+                        }
+                        else{
+                            boolean underscore = false;
+                            for(int i = 0; i < parsed.length(); i++){
+                                if(parsed.charAt(i) == '_'){
+                                    underscore = true;
+                                }
+                            }
+                            if(underscore){
+                                return new Word(Tag.ID,parsed);
+                            }
+                            else{
+                                throw new IllegalArgumentException("Cannot create id without _");
+                            }
+                        }
                     }
                     
                 } else if (Character.isDigit(peek)) {
                     String number = "";
-                    while(peek>='0' && peek<='9' || peek == '.' || peek == ','){
+                    while(peek>='a' && peek<='z' || peek >= '0' && peek<= '9' || peek == '_'){
+                        if(peek <= '9' && peek >= '0'){
                         number = number + peek;
                         peek = ' ';
                         readch(br);
+                        }
+                        else{
+                            throw new IllegalArgumentException("Identificator can't start with number");
+                        }
                     }
-                    return new Word(Tag.NUM,number);
+                    return new NumberTok(Integer.parseInt(number));
 
                 } else {
                         System.err.println("Erroneous character: " 
