@@ -4,6 +4,8 @@ import java.io.IOException;
 
 
 
+
+
 public class Lexer {
 
     public static int line = 1;
@@ -203,22 +205,17 @@ public class Lexer {
                         return Word.cond;
                     }
                     else{
-                        if(parsed.equals("_")){
-                            throw new IllegalArgumentException("Identificator can't contains only _");
+                        boolean onlyunderscore = true;
+                        for(int i = 0; i < parsed.length(); i++){
+                            if(parsed.charAt(i) != '_'){
+                                onlyunderscore = false;
+                            }
+                        }
+                        if(onlyunderscore){
+                            throw new IllegalArgumentException("identifiers cannot have only _");
                         }
                         else{
-                            boolean underscore = false;
-                            for(int i = 0; i < parsed.length(); i++){
-                                if(parsed.charAt(i) == '_'){
-                                    underscore = true;
-                                }
-                            }
-                            if(underscore){
-                                return new Word(Tag.ID,parsed);
-                            }
-                            else{
-                                throw new IllegalArgumentException("Cannot create id without _");
-                            }
+                            return new Word(Tag.ID, parsed);
                         }
                     }
                     
