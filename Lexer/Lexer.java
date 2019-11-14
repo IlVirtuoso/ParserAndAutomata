@@ -94,6 +94,7 @@ public class Lexer {
                         }
                     }
                 }
+                return lexical_scan(br);
             }
             else if(peek == '/'){
                 while(peek != -1 && peek != '\n'){
