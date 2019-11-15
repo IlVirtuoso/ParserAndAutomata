@@ -27,20 +27,32 @@ public class Parser {
     }
 
     public void start() {
-	// ... completare ...
+    // ... completare ...
+    
 	expr();
 	match(Tag.EOF);
 	// ... completare ...
     }
 
     private void expr() {
-	// ... completare ...
+        
     }
 
     private void exprp() {
 	switch (look.tag) {
 	case '+':
-	// ... completare ...
+    term();
+    exprp();
+    break;
+
+    case '-':
+    term();
+    exprp();
+    break;
+
+
+    default:
+    break;
 	}
     }
 
