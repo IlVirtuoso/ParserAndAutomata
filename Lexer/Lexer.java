@@ -101,6 +101,7 @@ public class Lexer {
                     peek = ' ';
                     readch(br);
                 }
+                return lexical_scan(br);
             }
             else{
                 return Token.div;
@@ -244,7 +245,7 @@ public class Lexer {
 		
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        String path = "Lexer\\try"; // il percorso del file da leggere
+        String path = "./try"; // il percorso del file da leggere
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Token tok;
