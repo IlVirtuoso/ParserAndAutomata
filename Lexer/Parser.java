@@ -27,25 +27,40 @@ public class Parser {
     }
 
     public void start() {
-    // ... completare ...
-    
-	expr();
-	match(Tag.EOF);
-	// ... completare ...
+        if(look.tag == Tag.NUM || look.tag == '('){
+            expr();
+            match(Tag.EOF);
+        }
+        else{
+            error("error in start");
+        }
     }
 
     private void expr() {
-        
+        switch(look.tag){
+            case '(':
+            error("error in expr");
+            break;
+
+            default:
+            term();
+            exprp();
+        }
     }
 
     private void exprp() {
 	switch (look.tag) {
-	case '+':
+    case '+':
+    match('+');
     term();
     exprp();
+    match(Tag.NUM);
+    
+
     break;
 
     case '-':
+    match('-');
     term();
     exprp();
     break;
@@ -57,15 +72,53 @@ public class Parser {
     }
 
     private void term() {
-        // ... completare ...
+        switch(look.tag){
+            case ')':
+            error("error in term");
+
+            default:
+            fact();
+            termp();
+        }
     }
 
     private void termp() {
-        // ... completare ...
+        switch(look.tag){
+            case '*':
+            match('*');
+            fact();
+            termp();
+            
+            break;
+
+            case '/':
+            match('/');
+            fact();
+            termp();
+            
+            break;
+
+            default:
+            break;
+        }
     }
 
     private void fact() {
-        // ... completare ...
+        switch(look.tag){
+            case '(':
+            match('(');
+            expr();
+            match(')');
+            break;
+
+            case Tag.NUM:
+            match(Tag.NUM);
+            break;
+
+            default:
+            error("on method fact");
+            break;
+            }
     }
 		
     public static void main(String[] args) {
