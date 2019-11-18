@@ -37,15 +37,11 @@ public class Parser {
     }
 
     private void expr() {
-        switch(look.tag){
-            case '(':
+        if(look.tag == Tag.EOF){
             error("error in expr");
-            break;
-
-            default:
-            term();
-            exprp();
         }
+        term();
+        exprp();
     }
 
     private void exprp() {
@@ -54,9 +50,6 @@ public class Parser {
     match('+');
     term();
     exprp();
-    match(Tag.NUM);
-    
-
     break;
 
     case '-':
@@ -95,9 +88,13 @@ public class Parser {
             match('/');
             fact();
             termp();
-            
             break;
 
+            case '(':
+            error("Error in termp");
+            break;
+
+            
             default:
             break;
         }
