@@ -78,7 +78,7 @@ public class ParserPrefix {
         String path = "...path..."; // il percorso del file da leggere
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
-            Parser parser = new Parser(lex, br);
+            ParserPrefix parser = new ParserPrefix(lex, br);
             parser.start();
             System.out.println("Input OK");
             br.close();
