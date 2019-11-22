@@ -27,15 +27,20 @@ public class ParserPrefix {
     }
 
     public void start() {
-    // ... completare ...
+    switch(look.tag){
+        case ')':
+        error("error in start");
+        break;
+    }
     stat();
 	match(Tag.EOF);
-	// ... completare ...
+	
     }
 
     //sono tutti da completare ,ricordati che tutti gli operatori sono in notazione prefissa
     public void statlist(){
-        
+        stat();
+        statlistp();
     }
 
     public void statlistp(){
@@ -43,7 +48,16 @@ public class ParserPrefix {
     }
 
     public void stat(){
+        switch(look.tag){
+            case '(':
+            match('(');
+            statp();
+            match(')');
+            break;
 
+            default:
+            error("error in stat");
+        }
     }
 
     public void statp(){
