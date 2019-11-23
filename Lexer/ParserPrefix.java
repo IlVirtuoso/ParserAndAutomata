@@ -51,7 +51,11 @@ public class ParserPrefix {
             stat();
             statlistp();
 
+            case ')':
+            break;
+
             default:
+            error("error in statlistp");
             break;
         }
     }
@@ -66,6 +70,7 @@ public class ParserPrefix {
 
             default:
             error("error in stat");
+            break;
         }
     }
 
@@ -76,7 +81,7 @@ public class ParserPrefix {
             bexpr();
             stat();
             elseopt();
-            break;S
+            break;
 
             case Tag.WHILE:
             match(Tag.WHILE);
@@ -115,7 +120,12 @@ public class ParserPrefix {
             stat();
             match(')');
 
+            case ')':
+
+            break;
+
             default:
+            error("error in elseopt");
             break;
         }
     }
