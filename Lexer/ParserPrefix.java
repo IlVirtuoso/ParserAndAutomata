@@ -17,7 +17,7 @@ public class ParserPrefix {
     }
 
     void error(String s) {
-	throw new Error("near line " + lex.line + ": " + s);
+	throw new Error("near line " + lex.line + ": " + s + "  on token :" + look.tag);
     }
 
     void match(int t) {
@@ -27,13 +27,14 @@ public class ParserPrefix {
     }
 
     public void start() {
-    switch(look.tag){
-        case ')':
-        error("error in start");
-        break;
+    if(look.tag == '('){
+        stat();
+	    match(Tag.EOF);
     }
-    stat();
-	match(Tag.EOF);
+    else{
+        error("Error in start");
+    }
+    
 	
     }
 
@@ -44,7 +45,15 @@ public class ParserPrefix {
     }
 
     public void statlistp(){
+        switch(look.tag){
 
+            case '(':
+            stat();
+            statlistp();
+
+            default:
+            break;
+        }
     }
 
     public void stat(){
@@ -61,35 +70,161 @@ public class ParserPrefix {
     }
 
     public void statp(){
+        switch(look.tag){
+            case Tag.COND:
+            match(Tag.COND);
+            bexpr();
+            stat();
+            elseopt();
+            break;S
 
+            case Tag.WHILE:
+            match(Tag.WHILE);
+            bexpr();
+            stat();
+            break;
+
+            case Tag.DO:
+            match(Tag.DO);
+            statlist();
+            break;
+
+            case Tag.PRINT:
+            match(Tag.PRINT);
+            exprlist();
+            break;
+
+            case Tag.READ:
+            match(Tag.READ);
+            match(Tag.ID);
+            break;
+
+            case '=':
+            match('=');
+            match(Tag.ID);
+            expr();
+            break;
+        }
     }
 
     public void elseopt(){
+        switch(look.tag){
+            case '(':
+            match('(');
+            match(Tag.ELSE);
+            stat();
+            match(')');
 
+            default:
+            break;
+        }
     }
 
     public void bexpr(){
+        switch(look.tag){
+            case '(':
+            match('(');
+            bexprp();
+            match(')');
+            break;
 
+            default:
+            error("error in bexpr");
+            break;
+        }
     }
 
 
-    public void bexrprp(){
+    public void bexprp(){
+        switch(look.tag){
+            case Tag.RELOP:
+            match(Tag.RELOP);
+            expr();
+            expr();
+            break;
 
+            default:
+            error("Error in bexprp");
+            break;
+        }
     }
 
+    public void expr(){
+        switch(look.tag){
+            case Tag.NUM:
+            match(Tag.NUM);
+            break;
+
+            case Tag.ID:
+            match(Tag.ID);
+            break;
+
+            case '(':
+            match('(');
+            exprp();
+            match(')');
+            break;
+
+
+
+            default:
+            error("error on expr");
+            break;
+        }
+    }
+
+    public void exprp(){
+        switch(look.tag){
+            case '+':
+            match('+');
+            exprlist();
+            break;
+
+            case '-':
+            match('-');
+            expr();
+            expr();
+            break;
+
+            case '*':
+            match('*');
+            exprlist();
+            break;
+
+            case '/':
+            match('/');
+            expr();
+            expr();
+            break;
+
+            default:
+            error("error in exprp");
+            break;
+        }
+    }
 
     public void exprlist(){
-
+        expr();
+        exprlistp();
     }
 
 
     public void exprlistp(){
+        switch(look.tag){
+            case ')':
 
+            break;
+
+            default:
+            expr();
+            exprlistp();
+            break;
+        }
     }
 		
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        String path = "...path..."; // il percorso del file da leggere
+        String path = "C:\\Users\\Virtuoso\\Desktop\\programmazione\\LFT\\Lexer\\input"; // il percorso del file da leggere
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             ParserPrefix parser = new ParserPrefix(lex, br);
