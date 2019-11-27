@@ -5,6 +5,10 @@ public class NumberTok extends Token {
         this.num = num;
     }
 
+    public int num(){
+        return this.num;
+    }
+
     public String toString(){
         return "<" + tag + "," + num + ">";
     }
