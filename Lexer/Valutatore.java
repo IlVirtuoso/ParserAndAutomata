@@ -102,7 +102,7 @@ public class Valutatore {
             case '/':
             match('/');
             termp1_i = termp_i / fact();
-            termp_val = termp(termp_i);
+            termp_val = termp(termp1_i);
             break;
 
             default:
