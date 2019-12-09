@@ -1,1 +1,4 @@
-54
+(do
+(read a)
+(print (+ a 1))
+)

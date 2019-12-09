@@ -1,11 +1,18 @@
 {
     "configurations": [
-    {
-        "type": "java",
-        "name": "Debug (Launch) - Current File",
-        "request": "launch",
-        "mainClass": "${file}"
-    },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Translator",
+            "request": "launch",
+            "mainClass": "Translator",
+            "projectName": "LFT_ae3286ba"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
         {
             "type": "java",
             "name": "CodeLens (Launch) - Lexer",
