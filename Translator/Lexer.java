@@ -198,7 +198,7 @@ public class Lexer {
                         return Word.print;
                     }
                     else if(parsed.equals("read")){
-                        return Word.print;
+                        return Word.read;
                     }
                     else if(parsed.equals("when")){
                         return Word.when;

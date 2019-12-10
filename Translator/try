@@ -1,4 +1,6 @@
 (do
-(read a)
-(print (+ a 1))
+(= x 10)
+(= y 20)
+(= z 30)
+(print (+ x (* y z)))
 )
